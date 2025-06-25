@@ -1,137 +1,191 @@
-let estado = {
-  nivel: 1,
-  decisiones: []
+// Estado global del jugador
+const estado = {
+  seleccionPrimeraOpcion: "",
+  seleccionPuerta: "",
+  puntaje: 0,
 };
 
-// Información personalizada para cada carta por nivel y opción
-const opciones = {
-  1: {
-    A: { titulo: "Explorar la ciudad", img: "https://picsum.photos/id/1011/600/400", desc: "Te aventuras entre los edificios destruidos." },
-    B: { titulo: "Refugiarse en un túnel", img: "https://picsum.photos/id/1012/600/400", desc: "Encuentras un antiguo búnker subterráneo." },
-    C: { titulo: "Buscar aliados", img: "https://picsum.photos/id/1013/600/400", desc: "Te unes a un pequeño grupo de sobrevivientes." }
-  },
-  2: {
-    A: { titulo: "Investigar una señal", img: "https://picsum.photos/id/1021/600/400", desc: "Una señal misteriosa proviene de las montañas." },
-    B: { titulo: "Construir defensa", img: "https://picsum.photos/id/1022/600/400", desc: "Fortificas tu refugio con lo que tienes a mano." },
-    C: { titulo: "Rastrear enemigos", img: "https://picsum.photos/id/1023/600/400", desc: "Sigues huellas en la nieve." }
-  },
-  3: {
-    A: { titulo: "Explorar una base abandonada", img: "https://picsum.photos/id/1031/600/400", desc: "Encuentras documentos secretos." },
-    B: { titulo: "Hackear una terminal", img: "https://picsum.photos/id/1032/600/400", desc: "Accedes a información antigua del sistema." },
-    C: { titulo: "Escapar de una trampa", img: "https://picsum.photos/id/1033/600/400", desc: "Una estructura colapsa a tu alrededor." }
-  },
-  4: {
-    A: { titulo: "Enviar señal de auxilio", img: "https://picsum.photos/id/1041/600/400", desc: "Lanzas un mensaje al espacio." },
-    B: { titulo: "Recuperar energía", img: "https://picsum.photos/id/1042/600/400", desc: "Recargas equipos con paneles solares." },
-    C: { titulo: "Curar heridas", img: "https://picsum.photos/id/1043/600/400", desc: "Usas un kit médico improvisado." }
-  },
-  5: {
-    A: { titulo: "Enfrentar al líder enemigo", img: "https://picsum.photos/id/1051/600/400", desc: "Te preparas para la batalla final." },
-    B: { titulo: "Liberar a los prisioneros", img: "https://picsum.photos/id/1052/600/400", desc: "Abres las celdas de un campamento oculto." },
-    C: { titulo: "Escapar del sistema", img: "https://picsum.photos/id/1053/600/400", desc: "Buscas una salida definitiva del caos." }
-  }
-};
-
-const fondos = {
-  1: 'https://media.istockphoto.com/id/1732963074/es/foto/cielo-nocturno-estrellado-en-el-espacio.jpg',
-  2: 'https://picsum.photos/id/1032/1200/800',
-  3: 'https://picsum.photos/id/1002/1200/800',
-  4: 'https://picsum.photos/id/1022/1200/800',
-  5: 'https://picsum.photos/id/1062/1200/800'
-};
-
-function irANivel(nivel, opcionAnterior) {
-  estado.nivel = nivel;
-  if (opcionAnterior) estado.decisiones.push(opcionAnterior);
-
-  if (nivel > 5) {
-    mostrarFinal();
-    return;
-  }
-
-  const fondo = fondos[nivel] || fondos[1];
-
-  const cartasHTML = `
-    <div class="columns is-multiline is-centered is-variable is-4 mt-5">
-      <div class="column is-4">
-        <div class="card has-equal-height">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="${opciones[nivel].A.img}" alt="${opciones[nivel].A.titulo}">
-            </figure>
-          </div>
-          <div class="card-content">
-            <p class="title is-5">${opciones[nivel].A.titulo}</p>
-            <p class="content">${opciones[nivel].A.desc}</p>
-          </div>
-          <footer class="card-footer">
-            <a href="#" class="card-footer-item button is-info is-light" onclick="irANivel(${nivel + 1}, 'A')">Elegir A</a>
-          </footer>
-        </div>
-      </div>
-
-      <div class="column is-4">
-        <div class="card has-equal-height">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="${opciones[nivel].B.img}" alt="${opciones[nivel].B.titulo}">
-            </figure>
-          </div>
-          <div class="card-content">
-            <p class="title is-5">${opciones[nivel].B.titulo}</p>
-            <p class="content">${opciones[nivel].B.desc}</p>
-          </div>
-          <footer class="card-footer">
-            <a href="#" class="card-footer-item button is-info is-light" onclick="irANivel(${nivel + 1}, 'B')">Elegir B</a>
-          </footer>
-        </div>
-      </div>
-
-      <div class="column is-4">
-        <div class="card has-equal-height">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="${opciones[nivel].C.img}" alt="${opciones[nivel].C.titulo}">
-            </figure>
-          </div>
-          <div class="card-content">
-            <p class="title is-5">${opciones[nivel].C.titulo}</p>
-            <p class="content">${opciones[nivel].C.desc}</p>
-          </div>
-          <footer class="card-footer">
-            <a href="#" class="card-footer-item button is-info is-light" onclick="irANivel(${nivel + 1}, 'C')">Elegir C</a>
-          </footer>
-        </div>
-      </div>
-    </div>
-  `;
-
+// Muestra una introducción tipo Hero con fondo, título, texto y un botón que lanza una función
+function mostrarHeroNarrativo(fondoURL, titulo, subtitulo, botonTexto, callback) {
   document.body.innerHTML = `
-    <section class="nivel" style="background-image: url('${fondo}');">
+    <section class="hero is-fullheight" style="background-image: url('${fondoURL}'); background-size: cover; background-position: center;">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title has-text-white is-1">${titulo}</h1>
+          <h2 class="subtitle has-text-white is-4">${subtitulo}</h2>
+          <button class="button is-light is-medium mt-5" onclick="${callback}">${botonTexto}</button>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+// Muestra una pantalla con fondo que luego revela el contenido con delay
+function mostrarPantallaTransicion(fondoURL, contenidoHTML, delay = 1500) {
+  document.body.innerHTML = `
+    <section class="nivel" style="background-image: url('${fondoURL}');">
       <div class="contenido-nivel" id="contenido-nivel">
-        <h2 class="title is-2">Nivel ${nivel}</h2>
-        ${opcionAnterior ? `<p class="subtitle is-5">Has elegido: ${opcionAnterior}</p>` : ''}
-        ${cartasHTML}
+        <h2 class="title is-3 has-text-white">Cargando nivel...</h2>
       </div>
     </section>
   `;
 
   setTimeout(() => {
-    document.getElementById('contenido-nivel').classList.add('visible');
-  }, 2000);
+    document.getElementById("contenido-nivel").innerHTML = contenidoHTML;
+    document.getElementById("contenido-nivel").classList.add("visible");
+  }, delay);
 }
 
-function mostrarFinal() {
-  document.body.innerHTML = `
-    <section class="nivel" style="background-color: black;">
-      <div class="contenido-nivel visible">
-        <h2 class="title is-1">¡Has completado CRUDY!</h2>
-        <p class="subtitle is-4">Tus decisiones fueron:</p>
-        <ul>
-          ${estado.decisiones.map((d, i) => `<li>Nivel ${i + 1}: ${d}</li>`).join('')}
-        </ul>
-        <button class="button is-light mt-5" onclick="location.reload()">Volver a empezar</button>
-      </div>
-    </section>
+// Nivel 2: Ruta inicial según elección
+function nivel2(opcion) {
+  estado.seleccionPrimeraOpcion = opcion;
+
+  mostrarHeroNarrativo(
+    "https://picsum.photos/id/1015/1200/800",
+    `Nivel 2: El Laberinto de Decisión - "Puertas de la Mente" ${opcion.toUpperCase()}`,
+    " CRUDY los transporta a un entorno abstracto donde deben atravesar puertas simbólicas:",
+    "Ver opciones",
+    "mostrarCartasNivel2()"
+  );
+}
+
+// Muestra cartas personalizadas por ruta
+function mostrarCartasNivel2() {
+  const opcion = estado.seleccionPrimeraOpcion;
+  const cartas = {
+    logico: [
+      { titulo: "Silogismo", texto: "Conclusión lógica basada en premisas.", img: "https://picsum.photos/seed/logic1/400/300" },
+      { titulo: "Secuencia", texto: "Ordena correctamente los pasos.", img: "https://picsum.photos/seed/logic2/400/300" },
+      { titulo: "Paradoja", texto: "Desafíos con contradicciones aparentes.", img: "https://picsum.photos/seed/logic3/400/300" }
+    ],
+    simulado: [
+      { titulo: "Prueba", texto: "Simulación de decisiones reales.", img: "https://picsum.photos/seed/sim1/400/300" },
+      { titulo: "Evaluación", texto: "Analiza datos y respuestas.", img: "https://picsum.photos/seed/sim2/400/300" },
+      { titulo: "Escenario", texto: "Toma decisiones en tiempo real.", img: "https://picsum.photos/seed/sim3/400/300" }
+    ],
+    trampa: [
+      { titulo: "Ilusión", texto: "¿Puedes distinguir lo falso?", img: "https://picsum.photos/seed/trick1/400/300" },
+      { titulo: "Mentira", texto: "Cuidado con los engaños.", img: "https://picsum.photos/seed/trick2/400/300" },
+      { titulo: "Falsa pista", texto: "No te dejes llevar por la trampa.", img: "https://picsum.photos/seed/trick3/400/300" }
+    ]
+  };
+
+  const seleccion = cartas[opcion];
+  let html = `<h2 class="title is-3 has-text-white">Selecciona una opción</h2><div class="columns is-multiline is-centered mt-5">`;
+
+  seleccion.forEach(carta => {
+    html += `
+      <div class="column is-4">
+        <div class="card has-equal-height">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="${carta.img}" alt="${carta.titulo}">
+            </figure>
+          </div>
+          <div class="card-content">
+            <p class="title is-5">${carta.titulo}</p>
+            <p class="content">${carta.texto}</p>
+          </div>
+          <footer class="card-footer">
+            <a class="card-footer-item button is-info is-light" onclick="nivel3('${carta.titulo}')">Seleccionar</a>
+          </footer>
+        </div>
+      </div>`;
+  });
+
+  html += `</div>`;
+  mostrarPantallaTransicion("https://picsum.photos/id/1016/1200/800", html);
+}
+
+// Nivel 3: Hero previo antes del reto
+function nivel3(seleccion) {
+  estado.seleccionPuerta = seleccion;
+
+  mostrarHeroNarrativo(
+    "https://picsum.photos/id/1020/1200/800",
+    "Nivel 3: Desafío de Reconstrucción  Memoria del Código",
+    "Para acceder a partes clave del núcleo, los desarrolladores deben reconstruir fragmentos de código que CRUDY ha corrompido. Se trata de secuencias visuales breves, códigos fugaces que se muestran por unos segundos y luego desaparecen",
+    "Iniciar desafío",
+    "mostrarMemoria()"
+  );
+}
+
+// Reto de memorización
+function mostrarMemoria() {
+  const contenido = `
+    <h2 class="title is-3 has-text-white">Memoriza la secuencia:</h2>
+    <p class="subtitle is-5 has-text-white" id="secuencia">🟥 🟩 🟦</p>
+    <button class="button is-warning mt-3" onclick="mostrarOpcionesNivel3()">He memorizado</button>
   `;
+
+  mostrarPantallaTransicion("https://picsum.photos/id/1021/1200/800", contenido, 3000);
+
+  setTimeout(() => {
+    const secuencia = document.getElementById("secuencia");
+    if (secuencia) secuencia.classList.add("oculto");
+  }, 6000);
+}
+
+// Opción luego del desafío visual
+function mostrarOpcionesNivel3() {
+  const contenido = `
+    <h2 class="title is-3 has-text-white">¿Cuál era la secuencia?</h2>
+    <button class="button is-success boton-opcion" onclick="nivel4(true)">🟥 🟩 🟦</button>
+    <button class="button is-danger boton-opcion" onclick="nivel4(false)">🟦 🟩 🟥</button>
+  `;
+
+  mostrarPantallaTransicion("https://picsum.photos/id/1051/1200/800", contenido);
+}
+
+// Nivel 4: Pregunta lógica/trampa
+function nivel4(acierto) {
+  if (acierto) estado.puntaje++;
+
+  let enunciado = "Si A → B y B → C, entonces:";
+  if (estado.seleccionPrimeraOpcion === "trampa") {
+    enunciado = "Si parece verdadero pero no lo es, entonces:";
+  }
+
+  const contenido = `
+    <h2 class="title is-3 has-text-white">Nivel 4: Lógica Fractal El Camino de las Condiciones</h2>
+    <p class="subtitle is-5 has-text-white">CRUDY lanza una secuencia de decisiones anidadas: ${enunciado}</p>
+    <button class="button is-info boton-opcion" onclick="nivel5(true)">A → C</button>
+    <button class="button is-danger boton-opcion" onclick="nivel5(false)">No se puede deducir</button>
+  `;
+
+  mostrarPantallaTransicion("https://picsum.photos/id/1052/1200/800", contenido);
+}
+
+// Nivel 5: Pregunta final
+function nivel5(acierto) {
+  if (acierto) estado.puntaje++;
+
+  let pregunta = "¿Cuál es una estructura de control en programación?";
+  if (estado.seleccionPrimeraOpcion === "simulado") {
+    pregunta = "¿Qué usarías para tomar decisiones en código?";
+  }
+
+  const contenido = `
+    <h2 class="title is-3 has-text-white">Nivel 5: Juicio Final</h2>
+    <p class="subtitle is-5 has-text-white"> Juicio del Núcleo - "Última Compilación" ${pregunta}</p>
+    <button class="button is-success boton-opcion" onclick="final(true)">Condicional</button>
+    <button class="button is-danger boton-opcion" onclick="final(false)">Contenedor</button>
+  `;
+
+  mostrarPantallaTransicion("https://picsum.photos/id/1053/1200/800", contenido);
+}
+
+// Final
+function final(acierto) {
+  if (acierto) estado.puntaje++;
+
+  const contenido = `
+    <h2 class="title is-2 has-text-white">¡Has completado el desafío!</h2>
+    <p class="subtitle is-4 has-text-white">Puntaje final: <strong>${estado.puntaje} / 3</strong></p>
+    <p class="has-text-white">Ruta elegida: <strong>${estado.seleccionPrimeraOpcion.toUpperCase()}</strong></p>
+    <p class="has-text-white">Última carta: <strong>${estado.seleccionPuerta}</strong></p>
+    <button class="button is-primary mt-4" onclick="location.reload()">Volver a empezar</button>
+  `;
+
+  mostrarPantallaTransicion("https://picsum.photos/id/1054/1200/800", contenido);
 }
