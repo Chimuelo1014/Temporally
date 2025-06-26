@@ -41,7 +41,7 @@ function nivel2(opcion) {
   estado.seleccionPrimeraOpcion = opcion;
 
   mostrarHeroNarrativo(
-    "https://picsum.photos/id/1015/1200/800",
+    "./img/nivel 2.png",
     `Nivel 2: El Laberinto de Decisión - "Puertas de la Mente" ${opcion.toUpperCase()}`,
     " CRUDY los transporta a un entorno abstracto donde deben atravesar puertas simbólicas:",
     "Ver opciones",
@@ -102,7 +102,7 @@ function nivel3(seleccion) {
   estado.seleccionPuerta = seleccion;
 
   mostrarHeroNarrativo(
-    "https://picsum.photos/id/1020/1200/800",
+    "./img/nivel 3.png",
     "Nivel 3: Desafío de Reconstrucción  Memoria del Código",
     "Para acceder a partes clave del núcleo, los desarrolladores deben reconstruir fragmentos de código que CRUDY ha corrompido. Se trata de secuencias visuales breves, códigos fugaces que se muestran por unos segundos y luego desaparecen",
     "Iniciar desafío",
