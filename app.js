@@ -54,19 +54,19 @@ function mostrarCartasNivel2() {
   const opcion = estado.seleccionPrimeraOpcion;
   const cartas = {
     logico: [
-      { titulo: "Silogismo", texto: "Conclusión lógica basada en premisas.", img: "https://picsum.photos/seed/logic1/400/300" },
+      { titulo: "Silogismo", texto: "Conclusión lógica basada en premisas.", img: "https://elperiodico.com.bo/wp-content/uploads/2024/02/IA.jpg" },
       { titulo: "Secuencia", texto: "Ordena correctamente los pasos.", img: "https://picsum.photos/seed/logic2/400/300" },
-      { titulo: "Paradoja", texto: "Desafíos con contradicciones aparentes.", img: "https://picsum.photos/seed/logic3/400/300" }
+      { titulo: "Paradoja", texto: "Desafíos con contradicciones aparentes.", img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEheQBPHLdgSKjH76m8twP211Ts7Fcnju4PhyejXygADyq7SlJyMQlddCNbRaGF5dGabWtE0glXnSd0KZciPwTXJPyMBx-90_-gX3cOCJeuiG2tnRMBF7EwDfA6hfGTyyIJDpsPF89ThiTKa/s1600/paradojas_ciencia_filosofia.jpg" }
     ],
     simulado: [
-      { titulo: "Prueba", texto: "Simulación de decisiones reales.", img: "https://picsum.photos/seed/sim1/400/300" },
-      { titulo: "Evaluación", texto: "Analiza datos y respuestas.", img: "https://picsum.photos/seed/sim2/400/300" },
-      { titulo: "Escenario", texto: "Toma decisiones en tiempo real.", img: "https://picsum.photos/seed/sim3/400/300" }
+      { titulo: "Prueba", texto: "Simulación de decisiones reales.", img: "/img/prueba.webp" },
+      { titulo: "Evaluación", texto: "Analiza datos y respuestas.", img: "./img/evaluacion.webp" },
+      { titulo: "Escenario", texto: "Toma decisiones en tiempo real.", img: "./img/Atajo1.webp" }
     ],
     trampa: [
-      { titulo: "Ilusión", texto: "¿Puedes distinguir lo falso?", img: "https://picsum.photos/seed/trick1/400/300" },
-      { titulo: "Mentira", texto: "Cuidado con los engaños.", img: "https://picsum.photos/seed/trick2/400/300" },
-      { titulo: "Falsa pista", texto: "No te dejes llevar por la trampa.", img: "https://picsum.photos/seed/trick3/400/300" }
+      { titulo: "Ilusión", texto: "¿Puedes distinguir lo falso?", img: "https://i.blogs.es/59f037/list_640px/1366_2000.jpg" },
+      { titulo: "Mentira", texto: "Cuidado con los engaños.", img: "https://media.istockphoto.com/id/533045396/es/foto/funeral-hombre-de-negocios-sosteniendo-los-dedos-cruzados-detr%C3%A1s-de-la-espalda.jpg?s=612x612&w=0&k=20&c=DzVv2ArlU9LLoTONZyy9eHisXVxnDuIGANAZTOXD5pg=" },
+      { titulo: "Falsa pista", texto: "No te dejes llevar por la trampa.", img: "https://media.licdn.com/dms/image/v2/C4D12AQGODVHVo805NA/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1529475568068?e=2147483647&v=beta&t=s-ytwMPwbjL6udF7SLPxLO7UsX0Fqgv89I3FIU2IpOE" }
     ]
   };
 
@@ -94,7 +94,7 @@ function mostrarCartasNivel2() {
   });
 
   html += `</div>`;
-  mostrarPantallaTransicion("https://picsum.photos/id/1016/1200/800", html);
+  mostrarPantallaTransicion("https://s10.s3c.es/imag/_v0/1792x978/b/5/e/ia_apoca.jpg", html);
 }
 
 // Nivel 3: Hero previo antes del reto
@@ -118,7 +118,7 @@ function mostrarMemoria() {
     <button class="button is-warning mt-3" onclick="mostrarOpcionesNivel3()">He memorizado</button>
   `;
 
-  mostrarPantallaTransicion("https://picsum.photos/id/1021/1200/800", contenido, 3000);
+  mostrarPantallaTransicion("./img/crudy2.png", contenido, 3000);
 
   setTimeout(() => {
     const secuencia = document.getElementById("secuencia");
@@ -134,10 +134,10 @@ function mostrarOpcionesNivel3() {
     <button class="button is-danger boton-opcion" onclick="nivel4(false)">🟦 🟩 🟥</button>
   `;
 
-  mostrarPantallaTransicion("https://picsum.photos/id/1051/1200/800", contenido);
+  mostrarPantallaTransicion("./img/background3.webp", contenido);
 }
 
-// Nivel 4: Pregunta lógica/trampa
+// Nivel 4: Pregunta lógica/trampahttp://localhost:5500/index.html#cartas
 function nivel4(acierto) {
   if (acierto) estado.puntaje++;
 
@@ -153,7 +153,7 @@ function nivel4(acierto) {
     <button class="button is-danger boton-opcion" onclick="nivel5(false)">No se puede deducir</button>
   `;
 
-  mostrarPantallaTransicion("https://picsum.photos/id/1052/1200/800", contenido);
+  mostrarPantallaTransicion("./img/background1.png", contenido);
 }
 
 // Nivel 5: Pregunta final
@@ -172,7 +172,7 @@ function nivel5(acierto) {
     <button class="button is-danger boton-opcion" onclick="final(false)">Contenedor</button>
   `;
 
-  mostrarPantallaTransicion("https://picsum.photos/id/1053/1200/800", contenido);
+  mostrarPantallaTransicion("./img/1.png", contenido);
 }
 
 // Final
