@@ -180,12 +180,12 @@ function final(acierto) {
   if (acierto) estado.puntaje++;
 
   const contenido = `
-    <h2 class="title is-2 has-text-white">¡Has completado el desafío!</h2>
-    <p class="subtitle is-4 has-text-white">Puntaje final: <strong>${estado.puntaje} / 3</strong></p>
-    <p class="has-text-white">Ruta elegida: <strong>${estado.seleccionPrimeraOpcion.toUpperCase()}</strong></p>
-    <p class="has-text-white">Última carta: <strong>${estado.seleccionPuerta}</strong></p>
+    <h2 class="title is-2 has-text-black">¡Has completado el desafío!</h2>
+    <p class="subtitle is-4 has-text-black">Puntaje final: <strong>${estado.puntaje} / 3</strong></p>
+    <p class="has-text-black">Ruta elegida: <strong>${estado.seleccionPrimeraOpcion.toUpperCase()}</strong></p>
+    <p class="has-text-black">Última carta: <strong>${estado.seleccionPuerta}</strong></p>
     <button class="button is-primary mt-4" onclick="location.reload()">Volver a empezar</button>
   `;
 
-  mostrarPantallaTransicion("https://picsum.photos/id/1054/1200/800", contenido);
+  mostrarPantallaTransicion("./img/apocalipsis.png", contenido);
 }
